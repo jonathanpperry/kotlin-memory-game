@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Test Your Memory</string>
+    <string name="app_name">Memory Game</string>
+    <string name="imagebutton_content_description">Image button UI element</string>
 </resources>
