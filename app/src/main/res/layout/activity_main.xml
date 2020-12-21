@@ -19,6 +19,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             app:cardCornerRadius="8dp">
 
@@ -36,6 +37,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             app:cardCornerRadius="8dp">
 
@@ -60,8 +62,7 @@
         android:overScrollMode="never"
         app:layout_constraintBottom_toTopOf="@+id/llGameInfo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:spanCount="2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
