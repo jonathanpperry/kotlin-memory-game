@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "431056608032",
+    "firebase_url": "https://jonathan-perry.firebaseio.com",
+    "project_id": "jonathan-perry",
+    "storage_bucket": "jonathan-perry.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431056608032:android:9a138cafd26c425fef5545",
+        "android_client_info": {
+          "package_name": "com.jonnyramen.mymemory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431056608032-ich4tjm0qmumjhvhgqv0hu35qav5c8nt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5ehNBVwrMS-m_m300crEKhfiSAKctYkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "431056608032-ich4tjm0qmumjhvhgqv0hu35qav5c8nt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
