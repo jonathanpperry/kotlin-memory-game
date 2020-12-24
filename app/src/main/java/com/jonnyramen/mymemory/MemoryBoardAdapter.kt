@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.jonnyramen.mymemory.models.BoardSize
 import com.jonnyramen.mymemory.models.MemoryCard
+import com.squareup.picasso.Picasso
 import kotlin.math.min
 
 class MemoryBoardAdapter(
@@ -57,7 +58,16 @@ class MemoryBoardAdapter(
 
         fun bind(position: Int) {
             val memoryCard = cards[position];
-            imageButton.setImageResource(if (memoryCard.isFaceUp) memoryCard.identifier else R.drawable.ic_launcher_background);
+            if (memoryCard.isFaceUp) {
+                if (memoryCard.imageUrl != null) {
+                    Picasso.get().load(memoryCard.imageUrl).into(imageButton)
+                } else {
+                    imageButton.setImageResource(memoryCard.identifier)
+                }
+            } else {
+                // Can set the back launcher pattern on image button
+                imageButton.setImageResource(if (memoryCard.isFaceUp) memoryCard.identifier else R.drawable.ic_launcher_background);
+            }
 
             imageButton.alpha = if (memoryCard.isMatched) .4f else 1.0f;
             val colorStateList = if (memoryCard.isMatched) ContextCompat.getColorStateList(context, R.color.color_gray) else null;
