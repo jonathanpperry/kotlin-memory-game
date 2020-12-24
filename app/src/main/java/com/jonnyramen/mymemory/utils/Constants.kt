@@ -2,6 +2,7 @@ package com.jonnyramen.mymemory.utils
 
 import com.jonnyramen.mymemory.R
 
+const val EXTRA_BOARD_SIZE = "EXTRA_BOARD_SIZE"
 val DEFAULT_ICONS = listOf(
     R.drawable.ic_breakfast,
     R.drawable.ic_face,
