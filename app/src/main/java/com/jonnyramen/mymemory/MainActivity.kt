@@ -10,10 +10,12 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +27,7 @@ import com.jonnyramen.mymemory.models.MemoryGame
 import com.jonnyramen.mymemory.models.UserImageList
 import com.jonnyramen.mymemory.utils.EXTRA_BOARD_SIZE
 import com.jonnyramen.mymemory.utils.EXTRA_GAME_NAME
+import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -32,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         private const val CREATE_REQUEST_CODE = 111
     }
 
-    private lateinit var clRoot: ConstraintLayout;
+    private lateinit var clRoot: CoordinatorLayout;
     private lateinit var rvBoard: RecyclerView;
     private lateinit var tvNumMoves: TextView;
     private lateinit var tvNumPairs: TextView;
@@ -81,6 +84,10 @@ class MainActivity : AppCompatActivity() {
             R.id.mi_custom -> {
                 showCreationDialog()
             }
+            R.id.mi_download -> {
+                showDownloadDialog()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -97,6 +104,17 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    private fun showDownloadDialog() {
+        val boardDownloadView = LayoutInflater.from(this).inflate(R.layout.dialog_download_board, null)
+        showAlertDialog("Fetch memory game", boardDownloadView, View.OnClickListener {
+            // Grab the text of the game name that the user wants to download
+            val etDownloadGame = boardDownloadView.findViewById<EditText>(R.id.etDownloadGame)
+            val gameToDownload = etDownloadGame.text.toString().trim()
+            downloadGame(gameToDownload)
+        })
+    }
+
+
     private fun downloadGame(customGameName: String) {
         db.collection("games").document(customGameName).get().addOnSuccessListener { document ->
             val userImageList = document.toObject(UserImageList::class.java)
@@ -108,8 +126,13 @@ class MainActivity : AppCompatActivity() {
             val numCards = userImageList.images.size * 2
             boardSize = BoardSize.getByValue(numCards)
             customGameImages = userImageList.images
-            setUpBoard()
+            for (imageUrl in userImageList.images) {
+                Picasso.get().load(imageUrl).fetch()
+            }
+            // Indicate to user that they are playing custom game
+            Snackbar.make(clRoot, "You're now playing $customGameName!", Snackbar.LENGTH_LONG).show()
             gameName = customGameName
+            setUpBoard()
         }.addOnFailureListener {exception ->
             Log.e(TAG, "Exceptions when retrieving game", exception)
         }
