@@ -16,10 +16,10 @@ import com.squareup.picasso.Picasso
 import kotlin.math.min
 
 class MemoryBoardAdapter(
-        private val context: Context,
-        private val boardSize: BoardSize,
-        private val cards: List<MemoryCard>,
-        private val cardClickListener: CardClickListener
+    private val context: Context,
+    private val boardSize: BoardSize,
+    private val cards: List<MemoryCard>,
+    private val cardClickListener: CardClickListener
 ) :
     RecyclerView.Adapter<MemoryBoardAdapter.ViewHolder>() {
 
@@ -33,17 +33,18 @@ class MemoryBoardAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val cardWidth = parent.width / boardSize.getWidth() - (2* MARGIN_SIZE);
-        val cardHeight = parent.height / boardSize.getHeight() - (2* MARGIN_SIZE);
+        val cardWidth = parent.width / boardSize.getWidth() - (2 * MARGIN_SIZE);
+        val cardHeight = parent.height / boardSize.getHeight() - (2 * MARGIN_SIZE);
         val cardSideLength = min(cardWidth, cardHeight);
 
         val view = LayoutInflater.from(context).inflate(R.layout.memory_card, parent, false);
-        val layoutParams =view.findViewById<CardView>(R.id.cardView).layoutParams as ViewGroup.MarginLayoutParams;
+        val layoutParams =
+            view.findViewById<CardView>(R.id.cardView).layoutParams as ViewGroup.MarginLayoutParams;
 
         // Set the width and height to same val, to make it square
         layoutParams.width = cardSideLength;
         layoutParams.height = cardSideLength;
-        layoutParams.setMargins(MARGIN_SIZE,MARGIN_SIZE,MARGIN_SIZE,MARGIN_SIZE)
+        layoutParams.setMargins(MARGIN_SIZE, MARGIN_SIZE, MARGIN_SIZE, MARGIN_SIZE)
         return ViewHolder(view);
     }
 
@@ -53,24 +54,28 @@ class MemoryBoardAdapter(
 
     override fun getItemCount() = boardSize.numCards;
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton);
 
         fun bind(position: Int) {
             val memoryCard = cards[position];
             if (memoryCard.isFaceUp) {
                 if (memoryCard.imageUrl != null) {
-                    Picasso.get().load(memoryCard.imageUrl).placeholder(R.drawable.ic_image).into(imageButton)
+                    Picasso.get().load(memoryCard.imageUrl).placeholder(R.drawable.ic_image)
+                        .into(imageButton)
                 } else {
                     imageButton.setImageResource(memoryCard.identifier)
                 }
             } else {
                 // Can set the back launcher pattern on image button
-                imageButton.setImageResource(if (memoryCard.isFaceUp) memoryCard.identifier else R.drawable.ic_launcher_background);
+                imageButton.setImageResource(R.drawable.cardback);
             }
 
             imageButton.alpha = if (memoryCard.isMatched) .4f else 1.0f;
-            val colorStateList = if (memoryCard.isMatched) ContextCompat.getColorStateList(context, R.color.color_gray) else null;
+            val colorStateList = if (memoryCard.isMatched) ContextCompat.getColorStateList(
+                context,
+                R.color.color_gray
+            ) else null;
             ViewCompat.setBackgroundTintList(imageButton, colorStateList);
 
             imageButton.setOnClickListener {
